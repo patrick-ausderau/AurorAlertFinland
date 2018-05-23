@@ -1,4 +1,4 @@
-package fi.ausderau.auroralert
+package fi.auroralert
 
 import org.junit.Test
 
