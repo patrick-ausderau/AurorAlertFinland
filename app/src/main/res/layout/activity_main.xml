@@ -4,15 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="fi.auroralert.MainActivity">
+    tools:context="fi.auroralert.view.MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hello" />
-    <TextView
-        android:id="@+id/txt_geo_obs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+
+    <fragment
+        android:id="@+id/frag_geo_obs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        class="fi.auroralert.view.GeoObsLocFragment" />
 
 </LinearLayout>
