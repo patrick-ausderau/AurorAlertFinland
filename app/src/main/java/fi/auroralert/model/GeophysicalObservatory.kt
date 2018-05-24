@@ -21,6 +21,7 @@ class GeophysicalObservatoryModel(application: Application): AndroidViewModel(ap
     private val geoLocations: MutableLiveData<List<GeophysicalObservatory>> = MutableLiveData()
 
     fun setGeoLocations() {
+        //TODO: parse 1st time (or if new stations), otherwise get from room DB
         doAsync {
             val bg = parseGeophysicsObservatories()
             uiThread { geoLocations.value = bg }
@@ -29,10 +30,6 @@ class GeophysicalObservatoryModel(application: Application): AndroidViewModel(ap
 
     fun getGeoLocations() = geoLocations
 }
-
-/*fun getGeophysicalObservatoryLocations: List<GeophysicalObservatory> {
-    //TODO: parse 1st time (or if new stations), otherwise get from room DB
-}*/
 
 fun parseGeophysicsObservatories(): List<GeophysicalObservatory> {
     var count = 0
