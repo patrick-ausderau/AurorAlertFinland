@@ -17,7 +17,7 @@ class GeoObsLocFragment: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val gom = ViewModelProviders.of(this).get(GeophysicalObservatoryModel::class.java)
-        gom.setGeoLocations()
+        gom.loadGeoLocations()
         gom.getGeoLocations().observe(this, Observer {
             val txtGeo = view!!.findViewById<TextView>(R.id.txt_geo_obs)
             txtGeo.text = it.toString()

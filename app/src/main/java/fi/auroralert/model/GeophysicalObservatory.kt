@@ -1,28 +1,42 @@
 package fi.auroralert.model
 
+import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+import android.content.Context
+import android.util.Log
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import org.jsoup.Jsoup
 
+@Entity
 data class GeophysicalObservatory(
-        val name: String,
-        val latitude: Double,
-        val longitude: Double) {
+        @PrimaryKey
+        var name: String = "",
+        var latitude: Double = 0.0,
+        var longitude: Double = 0.0) {
 
     override fun toString(): String = "Name: $name, Lat: $latitude, Lon: $longitude"
 
 }
 
-class GeophysicalObservatoryModel(): ViewModel() {
+class GeophysicalObservatoryModel(application: Application): AndroidViewModel(application) {
 
     private val geoLocations: MutableLiveData<List<GeophysicalObservatory>> = MutableLiveData()
 
-    fun setGeoLocations() {
-        //TODO: parse 1st time (or if new stations), otherwise get from room DB
+    fun loadGeoLocations(ctx: Context = getApplication(), force: Boolean = false) {
+        //TODO: move db/network to repository
         doAsync {
-            val bg = parseGeophysicsObservatories()
+            var bg = AuroraDB.getInstance(ctx).geoObsDao().getAll().value
+            Log.d("DB", "from db? " + bg?.size)
+            if(force || bg == null || bg.size <= 1) {
+                bg = parseGeophysicsObservatories()
+                Log.d("DB", "then from network..." + bg.size)
+                AuroraDB.getInstance(ctx).geoObsDao().insertAll(bg)
+            }
             uiThread { geoLocations.value = bg }
         }
     }
