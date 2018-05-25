@@ -1,12 +1,12 @@
 package fi.auroralert.model
 
 data class GeophysicalActivity(
-        val name: String,
+        val observatory: GeophysicalObservatory,
         val longName: String,
         val rxMax: Int,
         val level: String) {
 
-    override fun toString(): String = "Name: $longName ($name), RXmax: $rxMax, level: $level"
+    override fun toString(): String = "Name: $longName ($observatory), RXmax: $rxMax, level: $level"
 
 }
 

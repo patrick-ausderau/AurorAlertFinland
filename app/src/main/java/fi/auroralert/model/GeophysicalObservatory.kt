@@ -1,8 +1,7 @@
 package fi.auroralert.model
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import org.jsoup.Jsoup
@@ -16,7 +15,7 @@ data class GeophysicalObservatory(
 
 }
 
-class GeophysicalObservatoryModel(application: Application): AndroidViewModel(application) {
+class GeophysicalObservatoryModel(): ViewModel() {
 
     private val geoLocations: MutableLiveData<List<GeophysicalObservatory>> = MutableLiveData()
 
