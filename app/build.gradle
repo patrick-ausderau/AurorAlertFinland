@@ -58,4 +58,5 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.11.3'
     implementation "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
     implementation "org.jetbrains.anko:anko-appcompat-v7-coroutines:$anko_version"
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
 }

@@ -6,7 +6,7 @@ data class GeophysicalActivity(
         val rxMax: Int,
         val level: String) {
 
-    override fun toString(): String = "Name: $longName ($observatory), RXmax: $rxMax, level: $level"
+    override fun toString(): String = "$longName ($observatory), RXmax: $rxMax, level: $level"
 
 }
 

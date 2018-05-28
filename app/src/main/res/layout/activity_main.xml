@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/frag_geo_obs"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        class="fi.auroralert.view.GeoObsLocFragment" />
+        android:layout_height="match_parent"
+        class="fi.auroralert.view.GeophysicalObservatoryFragment" />
 
 </LinearLayout>

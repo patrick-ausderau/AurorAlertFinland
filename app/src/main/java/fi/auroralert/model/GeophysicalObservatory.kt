@@ -19,7 +19,7 @@ data class GeophysicalObservatory(
         val latitude: Double,
         var longitude: Double) {
 
-    override fun toString(): String = "Name: $name, Lat: $latitude, Lon: $longitude"
+    override fun toString(): String = "$name ($latitude, $longitude)"
 
 }
 
