@@ -30,7 +30,7 @@ class GeophysicalObservatoryModel(application: Application): AndroidViewModel(ap
     fun loadGeoLocations(ctx: Context = getApplication(), force: Boolean = false) {
         //TODO: move db/network to repository
         doAsync {
-            var bg = AuroraDB.get(ctx).geoObsDao().getAll().value
+            var bg = AuroraDB.get(ctx).geoObsDao().getAll()
             Log.d("DB", "from db? " + bg?.size)
             if(force || bg == null || bg.size <= 1) {
                 bg = parseGeophysicsObservatories()
