@@ -1,6 +1,8 @@
 package fi.auroralert.model
 
 import android.arch.lifecycle.LiveData
+
+import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Insert
@@ -21,11 +23,15 @@ abstract class AuroraDB: RoomDatabase() {
         private var sInstance: AuroraDB? = null
 
         @Synchronized
-        fun getInstance(context: Context): AuroraDB {
+        fun get(context: Context): AuroraDB {
             if (sInstance == null) {
                 sInstance = Room
                         .databaseBuilder(context.applicationContext, AuroraDB::class.java, "aurora.db")
-                        .fallbackToDestructiveMigration()
+                        .addCallback(object : RoomDatabase.Callback() {
+                            override fun onCreate(db: SupportSQLiteDatabase) {
+                            }
+                        })
+                        //.fallbackToDestructiveMigration()
                         .build()
             }
             return sInstance!!
@@ -40,5 +46,5 @@ interface GeoObsDao {
     fun getAll(): LiveData<List<GeophysicalObservatory>>
 
     @Insert(onConflict = REPLACE)
-    fun insertAll(vararg geoobs: List<GeophysicalObservatory>)
+    fun insertAll(geoobs: List<GeophysicalObservatory>)
 }

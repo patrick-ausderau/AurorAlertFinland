@@ -15,9 +15,9 @@ import org.jsoup.Jsoup
 @Entity
 data class GeophysicalObservatory(
         @PrimaryKey
-        var name: String = "",
-        var latitude: Double = 0.0,
-        var longitude: Double = 0.0) {
+        val name: String,
+        val latitude: Double,
+        var longitude: Double) {
 
     override fun toString(): String = "Name: $name, Lat: $latitude, Lon: $longitude"
 
@@ -30,12 +30,12 @@ class GeophysicalObservatoryModel(application: Application): AndroidViewModel(ap
     fun loadGeoLocations(ctx: Context = getApplication(), force: Boolean = false) {
         //TODO: move db/network to repository
         doAsync {
-            var bg = AuroraDB.getInstance(ctx).geoObsDao().getAll().value
+            var bg = AuroraDB.get(ctx).geoObsDao().getAll().value
             Log.d("DB", "from db? " + bg?.size)
             if(force || bg == null || bg.size <= 1) {
                 bg = parseGeophysicsObservatories()
                 Log.d("DB", "then from network..." + bg.size)
-                AuroraDB.getInstance(ctx).geoObsDao().insertAll(bg)
+                AuroraDB.get(ctx).geoObsDao().insertAll(bg)
             }
             uiThread { geoLocations.value = bg }
         }
