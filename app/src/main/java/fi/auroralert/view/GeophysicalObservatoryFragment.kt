@@ -12,6 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import fi.auroralert.R
+import fi.auroralert.model.GeophysicalActivity
+import fi.auroralert.model.GeophysicalActivityModel
 import fi.auroralert.model.GeophysicalObservatory
 import fi.auroralert.model.GeophysicalObservatoryModel
 import kotlinx.android.synthetic.main.frag_geophysical_observatory.*
@@ -23,9 +25,19 @@ class GeophysicalObservatoryFragment: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         rv_geo_obs.layoutManager = LinearLayoutManager(context)
-        val gom = ViewModelProviders.of(this).get(GeophysicalObservatoryModel::class.java)
+        /*val gom = ViewModelProviders.of(this).get(GeophysicalObservatoryModel::class.java)
         gom.loadGeoLocations()
         gom.getGeoLocations().observe(this, Observer {
+            /*val txtGeo = view!!.findViewById<TextView>(R.id.txt_geo_obs)
+            txtGeo.text = it.toString()
+            */
+            rv_geo_obs.adapter = GeophysicalObservatoryAdapter(it, context)
+        })
+        */
+
+        val gom = ViewModelProviders.of(this).get(GeophysicalActivityModel::class.java)
+        gom.loadGeoActivity()
+        gom.getGeoActivity().observe(this, Observer {
             /*val txtGeo = view!!.findViewById<TextView>(R.id.txt_geo_obs)
             txtGeo.text = it.toString()
             */
@@ -39,15 +51,18 @@ class GeophysicalObservatoryFragment: Fragment() {
 
 }
 
-class GeophysicalObservatoryAdapter(val items: List<GeophysicalObservatory>?, val context: Context?): RecyclerView.Adapter<GeophysicalObservatoryViewHolder>() {
+class GeophysicalObservatoryAdapter(val items: List<GeophysicalActivity>?, val context: Context?): RecyclerView.Adapter<GeophysicalObservatoryViewHolder>() {
     override fun getItemCount(): Int {
         return items?.size ?: 0
     }
 
     override fun onBindViewHolder(holder: GeophysicalObservatoryViewHolder, position: Int) {
-        holder?.geoName?.text = items?.get(position)?.name
-        holder?.geoLat?.text = " (" + items?.get(position)?.latitude
-        holder?.geoLon?.text = ", " + items?.get(position)?.longitude + ")"
+        holder?.geoLongname?.text = items?.get(position)?.longName
+        holder?.geoRx?.text = ", rx: " + items?.get(position)?.rxMax
+        holder?.geoLevel?.text = ", " + items?.get(position)?.level
+        holder?.geoName?.text = " (" + items?.get(position)?.observatory?.name + ")"
+        holder?.geoLat?.text = " (" + items?.get(position)?.observatory?.latitude
+        holder?.geoLon?.text = ", " + items?.get(position)?.observatory?.longitude + ")"
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GeophysicalObservatoryViewHolder {
@@ -57,7 +72,10 @@ class GeophysicalObservatoryAdapter(val items: List<GeophysicalObservatory>?, va
 }
 
 class GeophysicalObservatoryViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    val geoLongname = view.txt_geo_longname
     val geoName = view.txt_geo_name
+    val geoRx = view.txt_geo_rx
+    val geoLevel = view.txt_geo_level
     val geoLat = view.txt_geo_lat
     val geoLon = view.txt_geo_lon
 }
