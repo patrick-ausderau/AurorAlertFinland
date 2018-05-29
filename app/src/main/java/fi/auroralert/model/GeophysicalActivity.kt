@@ -44,11 +44,12 @@ fun parseGeophysicsActivity(): List<GeophysicalActivity> {
             .select("table").forEach {
                 if(count++ == 2) {
                     it.select("tr").forEach {
-                        Log.d("GeoActivity", "found? " + it.select("td")[0].select("a").text())
+                        Log.d("GeoActivity", "found? " + it.select("td")[0].text())
+                        val sn = it.select("td")[0].text()
+                                //"""\\((.*?)\\)""".toRegex().find(it.select("td")[0].text())?.value?: "FAILED?"
                         lst.add(GeophysicalActivity(
                                 GeophysicalObservatory(
-                                        """\\([A-Z]3\\)""".toRegex().find(it.select("td")[0].text())?.value
-                                                ?: "FAILED?",
+                                        sn.substring(sn.indexOf("(") + 1, sn.indexOf(")")),
                                         0.0,
                                         0.0),
                                 it.select("td")[0].select("a").text(),

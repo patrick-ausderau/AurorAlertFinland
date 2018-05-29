@@ -10,12 +10,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import fi.auroralert.R
 import fi.auroralert.model.GeophysicalActivity
 import fi.auroralert.model.GeophysicalActivityModel
-import fi.auroralert.model.GeophysicalObservatory
-import fi.auroralert.model.GeophysicalObservatoryModel
 import kotlinx.android.synthetic.main.frag_geophysical_observatory.*
 import kotlinx.android.synthetic.main.item_geophysical_observatory.view.*
 
@@ -25,22 +22,10 @@ class GeophysicalObservatoryFragment: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         rv_geo_obs.layoutManager = LinearLayoutManager(context)
-        /*val gom = ViewModelProviders.of(this).get(GeophysicalObservatoryModel::class.java)
-        gom.loadGeoLocations()
-        gom.getGeoLocations().observe(this, Observer {
-            /*val txtGeo = view!!.findViewById<TextView>(R.id.txt_geo_obs)
-            txtGeo.text = it.toString()
-            */
-            rv_geo_obs.adapter = GeophysicalObservatoryAdapter(it, context)
-        })
-        */
 
         val gom = ViewModelProviders.of(this).get(GeophysicalActivityModel::class.java)
         gom.loadGeoActivity()
         gom.getGeoActivity().observe(this, Observer {
-            /*val txtGeo = view!!.findViewById<TextView>(R.id.txt_geo_obs)
-            txtGeo.text = it.toString()
-            */
             rv_geo_obs.adapter = GeophysicalObservatoryAdapter(it, context)
         })
     }
