@@ -1,18 +1,8 @@
 package fi.auroralert.model
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
-import android.content.Context
-import android.util.Log
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 import org.jsoup.Jsoup
-
-const val TAGO = "GeophysicalObservatory"
 
 @Entity
 data class GeophysicalObservatory(
