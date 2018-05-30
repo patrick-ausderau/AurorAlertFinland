@@ -22,18 +22,18 @@ data class GeophysicalActivity(
 
 class GeophysicalActivityModel(application: Application): AndroidViewModel(application) {
 
-    private val geoActivity: MutableLiveData<List<GeophysicalActivity>> = MutableLiveData()
+    private val geoActivity: MutableLiveData<Pair<List<GeophysicalActivity>, String>> = MutableLiveData()
 
     fun loadGeoActivity() {
         //TODO: move db/network to repository
         doAsync {
-            val db = AuroraDB?.get(getApplication())?.geoObsDao()
-            var lstObs = db.getAll()// ?: parseGeophysicsObservatories()
-            Log.d(TAGA, "from db? " + lstObs?.size ?: "-1")
-            if(lstObs == null || lstObs.size <= 1) {
+            val db = AuroraDB.get(getApplication()).geoObsDao()
+            var lstObs = db.getAll()
+            Log.d(TAGA, "from db? " + lstObs.size)
+            if(lstObs.size <= 1) {
                 //TODO: check internet access :D
                 lstObs = parseGeophysicsObservatories()
-                Log.d(TAGA, "then parse web? " + lstObs?.size ?: "-1")
+                Log.d(TAGA, "then parse web? " + lstObs.size)
                 db.insertAll(lstObs)
             }
             val bg = parseGeophysicsActivity(lstObs)
@@ -46,13 +46,14 @@ class GeophysicalActivityModel(application: Application): AndroidViewModel(appli
 }
 
 //TODO: parse http://aurorasnow.fmi.fi/public_service/magforecast_fi.html
-fun parseGeophysicsActivity(lstLoc: List<GeophysicalObservatory>?): List<GeophysicalActivity> {
+fun parseGeophysicsActivity(lstLoc: List<GeophysicalObservatory>?): Pair<List<GeophysicalActivity>, String> {
     val lst = mutableListOf<GeophysicalActivity>()
+    var s = "N/A"
 
     var count = 0 //selector :nth-child don't work?
-    Jsoup.connect("http://aurorasnow.fmi.fi/public_service/magforecast_fi.html").get()
+    val html = Jsoup.connect("http://aurorasnow.fmi.fi/public_service/magforecast_fi.html").get()
             //.select("table:nth-child(3) tr").forEach {
-            .select("table").forEach {
+    html.select("table").forEach {
                 if(count++ == 2) {
                     it.select("tr").forEach {
                         Log.d(TAGA, "found? " + it.select("td")[0].text())
@@ -68,5 +69,13 @@ fun parseGeophysicsActivity(lstLoc: List<GeophysicalObservatory>?): List<Geophys
                     }
                 }
             }
-    return lst
+
+    val issued = "Päivitetty "
+    //"p:nth-child(2)" :´(
+    html.select("p").forEach {
+        Log.d(TAGA, "found? " + it.text())
+        if(it.text().startsWith(issued)) s = it.text().substring(issued.length)
+    }
+
+    return Pair(lst, s)
 }
