@@ -3,6 +3,9 @@
     <string name="hello">Auroras Alert Finland</string>
     <string name="sites">List of Geophysical Observatories with probability for next hour: </string>
     <string name="last_update">Issued at %s</string>
+    <string name="geo_name">%1s (%2s):</string>
+    <string name="geo_level">rx: %1d, %2s</string>
+    <string name="geo_latlon">(%1$.2f, %2$.2f)</string>
 
     <!-- TODO: parse them dynamically from
     http://aurorasnow.fmi.fi/public_service/magforecast_en.html -->

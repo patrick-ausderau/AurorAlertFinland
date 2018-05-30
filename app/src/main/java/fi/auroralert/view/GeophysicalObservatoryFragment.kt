@@ -6,7 +6,6 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.content.res.TypedArrayUtils
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -45,16 +44,23 @@ class GeophysicalObservatoryAdapter(val items: List<GeophysicalActivity>?, val c
     }
 
     override fun onBindViewHolder(holder: GeophysicalObservatoryViewHolder, position: Int) {
-        holder?.geoLongname?.text = items?.get(position)?.longName
-        holder?.geoRx?.text = "rx: " + items?.get(position)?.rxMax
-        holder?.geoLevel?.text = ", " + (context?.resources?.getStringArray(R.array.level)?.get(context?.resources?.getStringArray(R.array.level_color)?.indexOf(items?.get(position)?.level)?:-1)
-                ?: "Failed")
-        holder?.geoName?.text = " (" + items?.get(position)?.observatory?.name + "): "
-        holder?.geoLat?.text = " (" + items?.get(position)?.observatory?.latitude
-        holder?.geoLon?.text = ", " + items?.get(position)?.observatory?.longitude + ")"
-        val bgcolor = Color.parseColor(items?.get(position)?.level)
-        holder?.geoRx?.setBackgroundColor(bgcolor)
-        holder?.geoLevel?.setBackgroundColor(bgcolor)
+
+        holder.geoLevel?.text = context?.resources?.getString(
+                R.string.geo_level,
+                items?.get(position)?.rxMax,
+                context.resources?.getStringArray(R.array.level)?.get(
+                        context.resources?.getStringArray(
+                                R.array.level_color)?.indexOf(items?.get(position)?.level)?:-1) ?: "Failed")
+        holder.geoName?.text = context?.resources?.getString(
+                R.string.geo_name,
+                items?.get(position)?.longName,
+                items?.get(position)?.observatory?.name)
+        holder.geoLat?.text = context?.resources?.getString(
+                R.string.geo_latlon,
+                items?.get(position)?.observatory?.latitude,
+                items?.get(position)?.observatory?.longitude)
+
+        holder.geoLevel?.setBackgroundColor(Color.parseColor(items?.get(position)?.level))
 
     }
 
@@ -65,10 +71,7 @@ class GeophysicalObservatoryAdapter(val items: List<GeophysicalActivity>?, val c
 }
 
 class GeophysicalObservatoryViewHolder(view: View): RecyclerView.ViewHolder(view) {
-    val geoLongname = view.txt_geo_longname
     val geoName = view.txt_geo_name
-    val geoRx = view.txt_geo_rx
     val geoLevel = view.txt_geo_level
-    val geoLat = view.txt_geo_lat
-    val geoLon = view.txt_geo_lon
+    val geoLat = view.txt_geo_latlon
 }
