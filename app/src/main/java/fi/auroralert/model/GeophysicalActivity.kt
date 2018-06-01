@@ -3,18 +3,12 @@ package fi.auroralert.model
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModelProvider
 import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
 import android.util.Log
-import androidx.work.Data
 import androidx.work.Worker
-import androidx.work.Worker.WorkerResult
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 import org.jsoup.Jsoup
 import java.text.SimpleDateFormat
 import java.util.*
@@ -61,7 +55,6 @@ class GeophysicalActivityWorker(): Worker() {
         var lstObs = db.geoObsDao().getAll()
         Log.d(TAGA, "from db? " + lstObs.size)
         if(lstObs.size <= 1) {
-            //TODO: check internet access :D
             lstObs = parseGeophysicsObservatories()
             Log.d(TAGA, "then parse web? " + lstObs.size)
             db.geoObsDao().insertAll(lstObs)
@@ -73,11 +66,12 @@ class GeophysicalActivityWorker(): Worker() {
         else
             db.geoActDao().updateAll(lstAct)
 
+        //TODO: find closest observatory and push an alert if high activity
+
         return if(lstAct.isNotEmpty()) WorkerResult.SUCCESS else WorkerResult.FAILURE
     }
 }
 
-//TODO: parse http://aurorasnow.fmi.fi/public_service/magforecast_fi.html
 fun parseGeophysicsActivity(lstLoc: List<GeophysicalObservatory>?): List<GeophysicalActivity> {
     val lst = mutableListOf<GeophysicalActivity>()
     var s = "N/A"
