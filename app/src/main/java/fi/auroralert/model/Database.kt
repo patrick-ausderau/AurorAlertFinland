@@ -1,18 +1,16 @@
 package fi.auroralert.model
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.Insert
+import android.arch.lifecycle.LiveData
+import android.arch.persistence.room.*
 import android.arch.persistence.room.OnConflictStrategy.REPLACE
-import android.arch.persistence.room.Query
-import android.arch.persistence.room.Room
-import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 
-@Database(entities = [(GeophysicalObservatory::class)], version = 1)
+@Database(entities = [(GeophysicalObservatory::class), (GeophysicalActivity::class)], version = 1)
 abstract class AuroraDB: RoomDatabase() {
 
     abstract fun geoObsDao(): GeoObsDao
+    abstract fun geoActDao(): GeoActDao
+    abstract fun geoObsActDao(): GeoObsActDao
 
     /* one and only one instance */
     companion object {
@@ -41,4 +39,27 @@ interface GeoObsDao {
 
     @Insert(onConflict = REPLACE)
     fun insertAll(geoobs: List<GeophysicalObservatory>)
+}
+
+@Dao
+interface GeoActDao {
+
+    @Query("SELECT * FROM geophysicalactivity")
+    fun getAll(): List<GeophysicalActivity>
+
+    @Insert(onConflict = REPLACE)
+    fun insertAll(geoact: List<GeophysicalActivity>)
+
+    @Update(onConflict = REPLACE)
+    fun updateAll(geoact: List<GeophysicalActivity>)
+}
+
+@Dao
+interface GeoObsActDao {
+
+    @Query("SELECT geophysicalobservatory.*, geophysicalactivity.* " +
+            "FROM geophysicalobservatory " +
+            "INNER JOIN geophysicalactivity " +
+            "ON geophysicalobservatory.name = geophysicalactivity.observatory")
+    fun getAll(): LiveData<List<GeophysicalActivityLocation>>
 }

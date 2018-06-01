@@ -12,8 +12,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import fi.auroralert.R
-import fi.auroralert.model.GeophysicalActivity
-import fi.auroralert.model.GeophysicalActivityModel
+import fi.auroralert.model.GeophysicalActivityLocation
+import fi.auroralert.model.GeophysicalActivityLocationModel
 import kotlinx.android.synthetic.main.frag_geophysical_observatory.*
 import kotlinx.android.synthetic.main.item_geophysical_observatory.view.*
 
@@ -24,11 +24,10 @@ class GeophysicalObservatoryFragment: Fragment() {
         super.onActivityCreated(savedInstanceState)
         rv_geo_obs.layoutManager = LinearLayoutManager(context)
 
-        val gom = ViewModelProviders.of(this).get(GeophysicalActivityModel::class.java)
-        gom.loadGeoActivity()
-        gom.getGeoActivity().observe(this, Observer {
-            rv_geo_obs.adapter = GeophysicalObservatoryAdapter(it?.first, context)
-            txt_geo_date.text = getString(R.string.last_update, it?.second ?: "")
+        val goam = ViewModelProviders.of(this).get(GeophysicalActivityLocationModel::class.java)
+        goam.getGeoActivityLocation().observe(this, Observer {
+            rv_geo_obs.adapter = GeophysicalObservatoryAdapter(it, context)
+            txt_geo_date.text = getString(R.string.last_update, it?.firstOrNull()?.activity?.updated ?: "")
         })
     }
 
@@ -38,7 +37,7 @@ class GeophysicalObservatoryFragment: Fragment() {
 
 }
 
-class GeophysicalObservatoryAdapter(val items: List<GeophysicalActivity>?, val context: Context?): RecyclerView.Adapter<GeophysicalObservatoryViewHolder>() {
+class GeophysicalObservatoryAdapter(val items: List<GeophysicalActivityLocation>?, val context: Context?): RecyclerView.Adapter<GeophysicalObservatoryViewHolder>() {
     override fun getItemCount(): Int {
         return items?.size ?: 0
     }
@@ -47,20 +46,20 @@ class GeophysicalObservatoryAdapter(val items: List<GeophysicalActivity>?, val c
 
         holder.geoLevel?.text = context?.resources?.getString(
                 R.string.geo_level,
-                items?.get(position)?.rxMax,
+                items?.get(position)?.activity?.rxMax,
                 context.resources?.getStringArray(R.array.level)?.get(
                         context.resources?.getStringArray(
-                                R.array.level_color)?.indexOf(items?.get(position)?.level)?:-1) ?: "Failed")
+                                R.array.level_color)?.indexOf(items?.get(position)?.activity?.level)?:-1) ?: "Failed")
         holder.geoName?.text = context?.resources?.getString(
                 R.string.geo_name,
-                items?.get(position)?.longName,
-                items?.get(position)?.observatory?.name)
+                items?.get(position)?.activity?.longName,
+                items?.get(position)?.activity?.observatory)
         holder.geoLat?.text = context?.resources?.getString(
                 R.string.geo_latlon,
-                items?.get(position)?.observatory?.latitude,
-                items?.get(position)?.observatory?.longitude)
+                items?.get(position)?.location?.latitude,
+                items?.get(position)?.location?.longitude)
 
-        holder.geoLevel?.setBackgroundColor(Color.parseColor(items?.get(position)?.level))
+        holder.geoLevel?.setBackgroundColor(Color.parseColor(items?.get(position)?.activity?.level))
 
     }
 
