@@ -27,7 +27,7 @@ class GeophysicalObservatoryFragment: Fragment() {
         val goam = ViewModelProviders.of(this).get(GeophysicalActivityLocationModel::class.java)
         goam.getGeoActivityLocation().observe(this, Observer {
             rv_geo_obs.adapter = GeophysicalObservatoryAdapter(it, context)
-            txt_geo_date.text = getString(R.string.last_update, it?.firstOrNull()?.activity?.updated ?: "")
+            txt_geo_date.text = getString(R.string.geo_last_update, it?.firstOrNull()?.activity?.updated ?: "")
         })
     }
 
@@ -47,9 +47,9 @@ class GeophysicalObservatoryAdapter(val items: List<GeophysicalActivityLocation>
         holder.geoLevel?.text = context?.resources?.getString(
                 R.string.geo_level,
                 items?.get(position)?.activity?.rxMax,
-                context.resources?.getStringArray(R.array.level)?.get(
+                context.resources?.getStringArray(R.array.geo_level)?.get(
                         context.resources?.getStringArray(
-                                R.array.level_color)?.indexOf(items?.get(position)?.activity?.level)?:-1) ?: "Failed")
+                                R.array.geo_level_color)?.indexOf(items?.get(position)?.activity?.level)?:-1) ?: "Failed")
         holder.geoName?.text = context?.resources?.getString(
                 R.string.geo_name,
                 items?.get(position)?.activity?.longName,

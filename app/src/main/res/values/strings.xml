@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">AurorAlert FI</string>
     <string name="hello">Auroras Alert Finland</string>
-    <string name="sites">List of Geophysical Observatories with probability for next hour: </string>
-    <string name="last_update">Issued at %s</string>
+
+    <!-- fragment Geophysical observatory activity -->
+    <string name="geo_sites">List of Geophysical Observatories with probability for next hour: </string>
+    <string name="geo_last_update">Issued at %s</string>
     <string name="geo_name">%1s (%2s):</string>
     <string name="geo_level">rx: %1d, %2s</string>
     <string name="geo_latlon">(%1$.2f, %2$.2f)</string>
@@ -10,18 +12,26 @@
     <!-- TODO: parse them dynamically from
     http://aurorasnow.fmi.fi/public_service/magforecast_en.html -->
     <!-- IMPORTANT: keep the same order for level and level_color :D -->
-    <string-array name="level">
+    <string-array name="geo_level">
         <item>low</item>
         <item>increased</item>
         <item>moderate</item>
         <item>high</item>
         <item>very high</item>
     </string-array>
-    <string-array name="level_color">
+    <string-array name="geo_level_color">
         <item>#00FF00</item>
         <item>#FFFF00</item>
         <item>#FFA500</item>
         <item>#FF0000</item>
         <item>#800000</item>
     </string-array>
+
+    <!-- Preferences -->
+    <string name="pref_cloud_title">Cloud cover</string>
+    <string name="pref_cloud_desc">Amount in % of cloud cover. The less cloudy, the better. If 100%, the app will not check for cloud cover (you save one internet connection every 4 hours).</string>
+    <integer name="pref_cloud_def">50</integer>
+
+    <!-- menu -->
+    <string name="menu_settings">Settings</string>
 </resources>
