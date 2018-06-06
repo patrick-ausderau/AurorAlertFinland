@@ -7,9 +7,11 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.work.*
 import fi.auroralert.R
-import fi.auroralert.model.GeophysicalActivityWorker
+import fi.auroralert.worker.GeophysicalActivityWorker
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
+
+const val TAG = "AurorAlert"
 
 class MainActivity : AppCompatActivity() {
 
