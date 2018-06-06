@@ -28,9 +28,25 @@
     </string-array>
 
     <!-- Preferences -->
+    <string name="pref_cloud_night">Cloudiness and darkness</string>
     <string name="pref_cloud_title">Cloud cover</string>
-    <string name="pref_cloud_desc">Amount in % of cloud cover. The less cloudy, the better. If 100%, the app will not check for cloud cover (you save one internet connection every 4 hours).</string>
+    <string name="pref_cloud_desc">Amount in % of cloud cover. The less cloudy, the better.
+        If 100%, the app will not check for cloud cover.</string>
     <integer name="pref_cloud_def">50</integer>
+
+    <string name="pref_loc">Geolocation</string>
+    <string name="pref_loc_desc">Geolocation is used to calculate sunrise/sunset (darkness), check
+        local weather forecast (cloud cover) and to get the next hour geophysical activity from the
+        nearest observatory</string>
+    <string name="pref_loc_on">Enable geolocation</string>
+    <string name="pref_loc_on_desc">If you spend 90% of your evenings/nights at home or nearby 10km,
+        save phone resources.</string>
+    <string name="pref_loc_int">Refresh interval</string>
+    <string name="pref_loc_lat">Latitude</string>
+    <string name="pref_loc_lat_def">60.17</string>
+    <string name="pref_loc_lon">Longitude</string>
+    <string name="pref_loc_lon_def">24.95</string>
+
 
     <!-- menu -->
     <string name="menu_settings">Settings</string>

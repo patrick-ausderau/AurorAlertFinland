@@ -1,10 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-<EditTextPreference
-    android:key="pref_cloud"
-    android:title="@string/pref_cloud_title"
-    android:summary="@string/pref_cloud_desc"
-    android:defaultValue="@integer/pref_cloud_def"
-    android:maxLength="3"
-    android:inputType="number" />
+
+    <PreferenceCategory
+        android:title="@string/pref_cloud_night" >
+
+        <EditTextPreference
+            android:key="pref_cloud"
+            android:title="@string/pref_cloud_title"
+            android:summary="@string/pref_cloud_desc"
+            android:defaultValue="@integer/pref_cloud_def"
+            android:maxLength="3"
+            android:inputType="number" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_loc" >
+        <Preference android:summary="@string/pref_loc_desc" />
+
+        <CheckBoxPreference
+            android:key="pref_loc_on"
+            android:title="@string/pref_loc_on"
+            android:summary="@string/pref_loc_on_desc" />
+
+        <EditTextPreference
+            android:key="pref_loc_lat"
+            android:title="@string/pref_loc_lat"
+            android:defaultValue="@string/pref_loc_lat_def"
+            android:inputType="number" />
+
+        <EditTextPreference
+            android:key="pref_loc_lon"
+            android:title="@string/pref_loc_lon"
+            android:defaultValue="@string/pref_loc_lon_def"
+            android:inputType="number" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
