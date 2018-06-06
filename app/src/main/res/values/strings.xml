@@ -2,6 +2,9 @@
     <string name="app_name">AurorAlert FI</string>
     <string name="hello">Auroras Alert Finland</string>
 
+    <!-- fragment cloud -->
+    <string name="cloud_cover">Cloud cover forecast: </string>
+
     <!-- fragment Geophysical observatory activity -->
     <string name="geo_sites">List of Geophysical Observatories with probability for next hour: </string>
     <string name="geo_last_update">Issued at %s</string>

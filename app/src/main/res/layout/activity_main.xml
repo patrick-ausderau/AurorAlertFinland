@@ -20,9 +20,15 @@
         android:text="@string/hello" />
 
     <fragment
+        android:id="@+id/frag_cloud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        class="fi.auroralert.view.CloudFragment" />
+
+    <fragment
         android:id="@+id/frag_geo_obs"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         class="fi.auroralert.view.GeophysicalObservatoryFragment" />
 
 </LinearLayout>
