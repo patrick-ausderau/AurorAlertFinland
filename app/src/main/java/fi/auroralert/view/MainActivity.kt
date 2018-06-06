@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.work.*
 import fi.auroralert.R
+import fi.auroralert.worker.CloudWorker
 import fi.auroralert.worker.GeophysicalActivityWorker
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
@@ -22,11 +23,15 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(main_toolbar)
 
         val constraint = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
-        val updateWork = PeriodicWorkRequest
+        val updateGeoActivityWork = PeriodicWorkRequest
                 .Builder(GeophysicalActivityWorker::class.java, 15, TimeUnit.MINUTES)
                 .setConstraints(constraint)
                 .build()
-        WorkManager.getInstance().enqueue(updateWork)
+        val updateCloudWork = PeriodicWorkRequest
+                .Builder(CloudWorker::class.java, 4, TimeUnit.HOURS)
+                .setConstraints(constraint)
+                .build()
+        WorkManager.getInstance().enqueue(updateGeoActivityWork, updateCloudWork)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -22,6 +22,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildTypes.each {
+        it.buildConfigField 'String', 'FMI_API_KEY', auroralert_fmi_apikey
+    }
 }
 
 dependencies {
@@ -41,8 +44,16 @@ dependencies {
     // WorkManager
     implementation "android.arch.work:work-runtime-ktx:$work_version" // use -ktx for Kotlin
 
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation ('com.squareup.retrofit2:converter-simplexml:2.4.0'){
+        exclude group: 'xpp3', module: 'xpp3'
+        exclude group: 'stax', module: 'stax-api'
+        exclude group: 'stax', module: 'stax'
+    }
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
