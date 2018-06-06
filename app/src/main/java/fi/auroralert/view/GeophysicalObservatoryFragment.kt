@@ -60,6 +60,7 @@ class GeophysicalObservatoryAdapter(val items: List<GeophysicalActivityLocation>
                 items?.get(position)?.location?.longitude)
 
         holder.geoLevel?.setBackgroundColor(Color.parseColor(items?.get(position)?.activity?.level))
+        holder.geoLevel?.setTextColor(Color.BLACK)
 
     }
 
