@@ -4,6 +4,8 @@
 
     <!-- fragment cloud -->
     <string name="cloud_cover">Cloud cover forecast: </string>
+    <string name="cloud_cover_loc">Cloud cover forecast (%1s/%2s): </string>
+    <string name="cloud_cover_val">%1$.1f%%</string>
 
     <!-- fragment Geophysical observatory activity -->
     <string name="geo_sites">List of Geophysical Observatories with probability for next hour: </string>
