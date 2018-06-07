@@ -10,6 +10,7 @@ import fi.auroralert.R
 import fi.auroralert.worker.CloudWorker
 import fi.auroralert.worker.GeophysicalActivityWorker
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 const val TAG = "AurorAlert"
@@ -26,11 +27,16 @@ class MainActivity : AppCompatActivity() {
         val updateGeoActivityWork = PeriodicWorkRequest
                 .Builder(GeophysicalActivityWorker::class.java, 15, TimeUnit.MINUTES)
                 .setConstraints(constraint)
+                .addTag(TAG)
                 .build()
         val updateCloudWork = PeriodicWorkRequest
                 .Builder(CloudWorker::class.java, 4, TimeUnit.HOURS)
                 .setConstraints(constraint)
+                .addTag(TAG)
                 .build()
+
+        WorkManager.getInstance().cancelAllWorkByTag(TAG)
+
         WorkManager.getInstance().enqueue(updateGeoActivityWork, updateCloudWork)
     }
 

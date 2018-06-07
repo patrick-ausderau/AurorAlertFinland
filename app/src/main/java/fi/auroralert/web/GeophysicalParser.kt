@@ -28,7 +28,7 @@ fun parseGeophysicsActivity(lstLoc: List<GeophysicalObservatory>?): List<Geophys
     val issued = "Päivitetty "
     //"p:nth-child(2)" :´(
     html.select("p").forEach {
-        Log.d(TAG, "found? " + it.text())
+        //Log.d(TAG, "found? " + it.text())
         if(it.text().startsWith(issued)){
             s = it.text().substring(issued.length)
             return@forEach //no break??? And don't exit the loop :(
@@ -39,7 +39,7 @@ fun parseGeophysicsActivity(lstLoc: List<GeophysicalObservatory>?): List<Geophys
     html.select("table").forEach {
         if(count++ == 2) {
             it.select("tr").forEach {fe -> //avoid it -> it problem
-                Log.d(TAG, "found? " + fe.select("td")[0].text())
+                //Log.d(TAG, "found? " + fe.select("td")[0].text())
                 val found = lstLoc?.find {i -> i.name == """([A-Z]{3})""".toRegex().find(fe.select("td")[0].text())?.value?: "FAILED?"}?.name
                 if (found != null) lst.add(GeophysicalActivity(
                         found,
