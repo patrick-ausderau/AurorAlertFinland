@@ -1,4 +1,4 @@
-package fi.auroralert.model
+package fi.auroralert.utils
 
 import android.arch.persistence.room.TypeConverter
 

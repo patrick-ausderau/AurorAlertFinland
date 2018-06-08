@@ -7,8 +7,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.work.*
 import fi.auroralert.R
-import fi.auroralert.worker.CloudWorker
-import fi.auroralert.worker.GeophysicalActivityWorker
+import fi.auroralert.utils.worker.CloudWorker
+import fi.auroralert.utils.worker.GeophysicalActivityWorker
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import java.util.concurrent.TimeUnit

@@ -1,4 +1,4 @@
-package fi.auroralert.worker
+package fi.auroralert.utils.worker
 
 import android.preference.PreferenceManager
 import android.util.Log
@@ -6,7 +6,7 @@ import androidx.work.Worker
 import fi.auroralert.R
 import fi.auroralert.model.AuroraDB
 import fi.auroralert.view.TAG
-import fi.auroralert.web.parseCloudCover
+import fi.auroralert.utils.web.parseCloudCover
 
 class CloudWorker: Worker() {
 
@@ -26,8 +26,8 @@ class CloudWorker: Worker() {
         Log.d(TAG, "work cloud: " + lst)
         if(lst.isNotEmpty()) {
             val db = AuroraDB.get(applicationContext)
-            db.getCloudDao().deleteAll()
-            db.getCloudDao().insertAll(lst)
+            db.cloudDao().deleteAll()
+            db.cloudDao().insertAll(lst)
             return WorkerResult.SUCCESS
         }
 

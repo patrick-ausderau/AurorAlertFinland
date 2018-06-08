@@ -2,15 +2,17 @@ package fi.auroralert.model
 
 import android.arch.persistence.room.*
 import android.content.Context
+import fi.auroralert.utils.Converter
 
-@Database(entities = [(GeophysicalObservatory::class), (GeophysicalActivity::class), (Cloud::class)], version = 1)
+@Database(entities = [(GeophysicalObservatory::class), (GeophysicalActivity::class), (Cloud::class), (Geolocation::class)], version = 1)
 @TypeConverters(Converter::class)
 abstract class AuroraDB: RoomDatabase() {
 
     abstract fun geoObsDao(): GeoObsDao
     abstract fun geoActDao(): GeoActDao
     abstract fun geoObsActDao(): GeoObsActDao
-    abstract fun getCloudDao(): CloudDao
+    abstract fun cloudDao(): CloudDao
+    abstract fun geolocationDAO(): GeolocationDao
 
     /* one and only one instance */
     companion object {

@@ -22,7 +22,7 @@ data class Cloud(
 class CloudModel(application: Application): AndroidViewModel(application) {
 
     private val cloud: LiveData<List<Cloud>> =
-            AuroraDB.get(getApplication()).getCloudDao().getAll()
+            AuroraDB.get(getApplication()).cloudDao().getAll()
 
     fun getCloud() = cloud
 }

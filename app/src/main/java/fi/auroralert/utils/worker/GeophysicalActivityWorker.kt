@@ -1,11 +1,11 @@
-package fi.auroralert.worker
+package fi.auroralert.utils.worker
 
 import android.util.Log
 import androidx.work.Worker
 import fi.auroralert.model.AuroraDB
 import fi.auroralert.view.TAG
-import fi.auroralert.web.parseGeophysicsActivity
-import fi.auroralert.web.parseGeophysicsObservatories
+import fi.auroralert.utils.web.parseGeophysicsActivity
+import fi.auroralert.utils.web.parseGeophysicsObservatories
 import java.text.SimpleDateFormat
 import java.util.*
 

@@ -42,12 +42,25 @@ interface CloudDao {
     @Query("SELECT * FROM cloud")
     fun getAll(): LiveData<List<Cloud>>
 
-    /*@Query("SELECT * FROM cloud WHERE time")
-    fun get(): Cloud*/
+    @Query("SELECT * FROM cloud WHERE time LIKE :time")
+    fun get(time: String): Cloud
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(cloud: List<Cloud>)
 
     @Query("DELETE FROM cloud")
     fun deleteAll()
+}
+
+@Dao
+interface GeolocationDao {
+
+    @Query("Select * FROM geolocation ORDER BY time")
+    fun getAll(): LiveData<List<Geolocation>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(location: Geolocation)
+
+    @Delete
+    fun delete(locations: List<Geolocation>)
 }

@@ -1,4 +1,4 @@
-package fi.auroralert.web
+package fi.auroralert.utils.web
 
 import android.util.Log
 import fi.auroralert.BuildConfig
