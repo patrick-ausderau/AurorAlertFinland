@@ -9,8 +9,8 @@ import java.util.*
 
 @Entity
 data class Cloud(
-        val location: String,
-        val region: String,
+        val location: String?,
+        val region: String?,
         @PrimaryKey
         val time: Date,
         val cover: Float) {

@@ -27,8 +27,8 @@ class CloudFragment: Fragment() {
         val co = ViewModelProviders.of(this).get(CloudModel::class.java)
         co.getCloud().observe(this, Observer {
             txt_cloud.text = getString(R.string.cloud_cover_loc,
-                    it?.firstOrNull()?.location ?: "",
-                    it?.firstOrNull()?.region ?: "")
+                    it?.firstOrNull()?.location ?: "N",
+                    it?.firstOrNull()?.region ?: "A")
             rv_cloud.adapter = CloudAdapter(it, context)
         })
     }

@@ -55,8 +55,11 @@ interface CloudDao {
 @Dao
 interface GeolocationDao {
 
-    @Query("Select * FROM geolocation ORDER BY time")
+    @Query("SELECT * FROM geolocation ORDER BY time")
     fun getAll(): LiveData<List<Geolocation>>
+
+    @Query("SELECT count(*) FROM geolocation")
+    fun count(): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(location: Geolocation)

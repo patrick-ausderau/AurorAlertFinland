@@ -25,9 +25,9 @@ class CloudWorker: Worker() {
 
         Log.d(TAG, "work cloud: " + lst)
         if(lst.isNotEmpty()) {
-            val db = AuroraDB.get(applicationContext)
-            db.cloudDao().deleteAll()
-            db.cloudDao().insertAll(lst)
+            val db = AuroraDB.get(applicationContext).cloudDao()
+            db.deleteAll()
+            db.insertAll(lst)
             return WorkerResult.SUCCESS
         }
 
