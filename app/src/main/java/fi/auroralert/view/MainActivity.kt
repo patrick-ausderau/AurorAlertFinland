@@ -8,7 +8,7 @@ import android.view.MenuItem
 import androidx.work.*
 import fi.auroralert.R
 import fi.auroralert.utils.worker.CloudWorker
-import fi.auroralert.utils.worker.GeolocationWorker
+import fi.auroralert.utils.worker.GeolocationService
 import fi.auroralert.utils.worker.GeophysicalActivityWorker
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
@@ -34,19 +34,12 @@ class MainActivity : AppCompatActivity() {
                 .setConstraints(constraint)
                 .addTag(TAG)
                 .build()
-        /*val updateGeolocationWork = OneTimeWorkRequest
-                .Builder(GeolocationWorker::class.java)
-                .addTag(TAG)
-                .build()
-                */
-
 
         WorkManager.getInstance().cancelAllWorkByTag(TAG)
 
-        WorkManager.getInstance().enqueue(updateGeoActivityWork, updateCloudWork/*, updateGeolocationWork*/)
+        WorkManager.getInstance().enqueue(updateGeoActivityWork, updateCloudWork)
 
-        //val geoloc =
-        GeolocationWorker(this)
+        GeolocationService(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
