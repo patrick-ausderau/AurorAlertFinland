@@ -34,14 +34,19 @@ class MainActivity : AppCompatActivity() {
                 .setConstraints(constraint)
                 .addTag(TAG)
                 .build()
-        val updateGeolocationWork = OneTimeWorkRequest
+        /*val updateGeolocationWork = OneTimeWorkRequest
                 .Builder(GeolocationWorker::class.java)
                 .addTag(TAG)
                 .build()
+                */
+
 
         WorkManager.getInstance().cancelAllWorkByTag(TAG)
 
-        WorkManager.getInstance().enqueue(updateGeoActivityWork, updateCloudWork, updateGeolocationWork)
+        WorkManager.getInstance().enqueue(updateGeoActivityWork, updateCloudWork/*, updateGeolocationWork*/)
+
+        //val geoloc =
+        GeolocationWorker(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -1,6 +1,8 @@
 package fi.auroralert.utils.worker
 
+import android.app.Service
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Criteria
 import android.location.Location
@@ -8,6 +10,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.os.IBinder
 import android.preference.PreferenceManager
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
@@ -20,9 +23,19 @@ import fi.auroralert.view.MainActivity
 import fi.auroralert.view.TAG
 import java.util.*
 
-class GeolocationWorker: Worker(), LocationListener {
+class GeolocationWorker(private val context: Context): Service(), LocationListener {
 
-    //private var locationManager: LocationManager? = null
+    private var locationManager: LocationManager? = null
+
+    init {
+        doWork()
+    }
+
+    override fun onBind(p0: Intent?): IBinder? {
+        return null;
+    }
+
+
    // private val locationListener: LocationListener = object: LocationListener {
 
         override fun onLocationChanged(p0: Location?) {
@@ -36,16 +49,16 @@ class GeolocationWorker: Worker(), LocationListener {
 
     //}
 
-    override fun doWork(): WorkerResult {
+    private fun doWork() {
         Log.d(TAG, "geolocation work")
 
-        val db = AuroraDB.get(applicationContext).geolocationDAO()
-        val sp = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        val db = AuroraDB.get(context).geolocationDAO()
+        val sp = PreferenceManager.getDefaultSharedPreferences(context)
         val permissions = Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission(applicationContext,
+                ContextCompat.checkSelfPermission(context,
                         android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(applicationContext,
+                ContextCompat.checkSelfPermission(context,
                         android.Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED
 
@@ -60,43 +73,43 @@ class GeolocationWorker: Worker(), LocationListener {
             db.insert(Geolocation(
                     Date(),
                     sp.getString("pref_loc_lat",
-                            applicationContext.resources.getString(R.string.pref_loc_lat_def)).toFloat(),
+                            context.resources.getString(R.string.pref_loc_lat_def)).toFloat(),
                     sp.getString("pref_loc_lon",
-                            applicationContext.resources.getString(R.string.pref_loc_lon_def)).toFloat()))
-            return WorkerResult.FAILURE
+                            context.resources.getString(R.string.pref_loc_lon_def)).toFloat()))
+            return
         }
 
         Log.d(TAG, "geolocation: will start to listen to location changes")
-        //if(locationManager == null) locationManager = applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val locationManager = applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if(locationManager == null) locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        //val locationManager = applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         //val criteria = Criteria()
         //criteria.setAccuracy(Criteria.ACCURACY_COARSE)
         //locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, (1000 * 60 * 15), (10 * 1000f), locationListener)
-        val gps = locationManager.allProviders.contains(LocationManager.NETWORK_PROVIDER) &&
-                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-        val net = (locationManager.allProviders.contains(LocationManager.GPS_PROVIDER) &&
-                locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+        val gps = locationManager?.allProviders?.contains(LocationManager.NETWORK_PROVIDER)?:false &&
+                locationManager?.isProviderEnabled(LocationManager.NETWORK_PROVIDER)?:false
+        val net = locationManager?.allProviders?.contains(LocationManager.GPS_PROVIDER)?:false &&
+                locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER)?:false
         Log.d(TAG, "location manager? ${locationManager} and gps? ${gps} or net ${net}")
         if(gps || net) {
             //locationManager.requestSingleUpdate(criteria, this, null)
             Log.d(TAG, "location alive we ride")
             //locationManager.requestLocationUpdates(if(net)LocationManager.NETWORK_PROVIDER else LocationManager.GPS_PROVIDER, (1000 * 60 * 15), (10 * 1000f), this)
-            locationManager.requestLocationUpdates(if(net)LocationManager.NETWORK_PROVIDER else LocationManager.GPS_PROVIDER, 0, 0f, this)
+            locationManager?.requestLocationUpdates(if(net)LocationManager.NETWORK_PROVIDER else LocationManager.GPS_PROVIDER, 0, 0f, this)
             Log.d(TAG, "location alive we ride REALLY?????")
             if(locationManager != null) {
-                val loc = locationManager.getLastKnownLocation(if(net) LocationManager.NETWORK_PROVIDER else LocationManager.GPS_PROVIDER );
+                val loc = locationManager?.getLastKnownLocation(if(net) LocationManager.NETWORK_PROVIDER else LocationManager.GPS_PROVIDER );
                 Log.d(TAG, "will distroy everything? lat: ${loc?.latitude} and lon: ${loc?.longitude}")
-                return WorkerResult.SUCCESS
+                return
             }
             //val loc = locationManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
             //Log.d(TAG, "location last known? lat : ${loc?.latitude} lon: ${loc?. latitude}")
 
             Log.d(TAG, "WTF??????????????????????????????????")
-            return WorkerResult.FAILURE
+            return
         }
 
         Log.d(TAG, "fucking location!!!!!!!!!!")
-        return WorkerResult.FAILURE
+        return
     }
 
 }
