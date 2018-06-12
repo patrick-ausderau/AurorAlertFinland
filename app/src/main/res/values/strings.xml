@@ -6,6 +6,10 @@
     <string name="cloud_cover_loc">Cloud cover forecast (%1s/%2s): </string>
     <string name="cloud_cover_val">%1$.1f%%</string>
 
+    <!-- fragment geolocation -->
+    <string name="loc_time">Your location or from preferences (last updated at %1s)</string>
+    <string name="loc_lat_lon">Latitude: %1$.2f, Longitude: %2$.2f</string>
+
     <!-- fragment Geophysical observatory activity -->
     <string name="geo_sites">List of Geophysical Observatories with probability for next hour: </string>
     <string name="geo_last_update">Issued at %s</string>

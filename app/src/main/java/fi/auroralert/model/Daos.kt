@@ -58,6 +58,9 @@ interface GeolocationDao {
     @Query("SELECT * FROM geolocation ORDER BY time")
     fun getAll(): LiveData<List<Geolocation>>
 
+    @Query("SELECT * FROM geolocation ORDER BY time LIMIT 1")
+    fun getLast(): LiveData<Geolocation>
+
     @Query("SELECT count(*) FROM geolocation")
     fun count(): Int
 
