@@ -65,5 +65,8 @@ interface GeolocationDao {
     fun insert(location: Geolocation)
 
     @Delete
-    fun delete(locations: List<Geolocation>)
+    fun delete(location: Geolocation)
+
+    @Query("DELETE FROM geolocation")
+    fun deleteAll()
 }

@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">AurorAlert FI</string>
-    <string name="hello">Auroras Alert Finland</string>
+    <string name="app_name">AurorAlert Finland</string>
 
     <!-- fragment cloud -->
     <string name="cloud_cover">Cloud cover forecast: </string>

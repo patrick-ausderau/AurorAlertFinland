@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.SettingsActivity" />
+        <service android:name=".utils.worker.GeolocationService" />
     </application>
 
 </manifest>

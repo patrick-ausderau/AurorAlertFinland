@@ -11,6 +11,7 @@ import fi.auroralert.utils.worker.CloudWorker
 import fi.auroralert.utils.worker.GeolocationService
 import fi.auroralert.utils.worker.GeophysicalActivityWorker
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.doAsync
 import java.util.concurrent.TimeUnit
 
 const val TAG = "AurorAlert"
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         WorkManager.getInstance().enqueue(updateGeoActivityWork, updateCloudWork)
 
-        GeolocationService(this)
+        startService(Intent(this, GeolocationService::class.java))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -14,11 +14,6 @@
         android:background="@color/colorPrimaryDark"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello" />
-
     <fragment
         android:id="@+id/frag_cloud"
         android:layout_width="wrap_content"
