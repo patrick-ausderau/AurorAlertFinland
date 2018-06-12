@@ -14,20 +14,23 @@ class CloudWorker: Worker() {
         Log.d(TAG, "work cloud")
 
         val sp = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        Log.d(TAG, "test cloud: " + sp.getString("pref_cloud", "sharedPref FAILED?"))
+        Log.d(TAG, "work cloud: " + sp.getString("pref_cloud", "sharedPref FAILED?"))
+        val db = AuroraDB.get(applicationContext)
+        val lastLoc = db.geolocationDAO().getAll().firstOrNull()
+        val latDef = applicationContext.resources.getString(R.string.pref_loc_lat_def)
+        val lonDef = applicationContext.resources.getString(R.string.pref_loc_lon_def)
 
-        val lst = parseCloudCover(sp.getString(
-                "pref_loc_lat",
-                applicationContext.resources.getString(R.string.pref_loc_lat_def))
-                + "," + sp.getString(
-                "pref_loc_lon",
-                applicationContext.resources.getString(R.string.pref_loc_lon_def)))
+        val lat = if(sp.getBoolean("pref_loc_on", false)) lastLoc?.latitude?: latDef
+            else sp.getString("pref_loc_lat", latDef)
+        val lon = if(sp.getBoolean("pref_loc_on", false)) lastLoc?.longitude?: lonDef
+            else sp.getString("pref_loc_lon", lonDef)
 
-        Log.d(TAG, "work cloud: " + lst)
+        val lst = parseCloudCover("$lat,$lon")
+
+        Log.d(TAG, "work cloud ${sp.getBoolean("pref_loc_on",false)}($lat,$lon): $lst")
         if(lst.isNotEmpty()) {
-            val db = AuroraDB.get(applicationContext).cloudDao()
-            db.deleteAll()
-            db.insertAll(lst)
+            db.cloudDao().deleteAll()
+            db.cloudDao().insertAll(lst)
             return WorkerResult.SUCCESS
         }
 
