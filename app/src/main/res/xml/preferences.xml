@@ -12,6 +12,14 @@
             android:maxLength="3"
             android:inputType="number" />
 
+        <ListPreference
+            android:key="pref_dark"
+            android:title="@string/pref_dark"
+            android:summary="@string/pref_dark_desc"
+            android:entries="@array/pref_dark_name"
+            android:entryValues="@array/pref_dark_val"
+            android:defaultValue="3" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -41,6 +41,19 @@
         android:layout_marginBottom="1dp"/>
 
     <fragment
+        android:id="@+id/frag_darkness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        class="fi.auroralert.view.DarknessFragment" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"/>
+
+    <fragment
         android:id="@+id/frag_geo_obs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

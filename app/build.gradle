@@ -60,8 +60,18 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    // Parse HTML/XML
     implementation 'org.jsoup:jsoup:1.11.3'
+
+    // Async
     implementation "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
     implementation "org.jetbrains.anko:anko-appcompat-v7-coroutines:$anko_version"
+
+    // RecyclerView
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+
+    // SunriseSunset
+
+    implementation 'ca.rmen:lib-sunrise-sunset:1.1.1'
 }
