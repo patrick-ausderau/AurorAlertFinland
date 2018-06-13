@@ -20,6 +20,8 @@ allprojects {
     repositories {
         google()
         jcenter()
+        //Sunrise/set
+        maven { url "https://dl.bintray.com/caarmen/maven/" }
     }
 }
 

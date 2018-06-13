@@ -36,9 +36,6 @@ class GeolocationService(): Service(), LocationListener {
         Log.d(TAG, "geolocation service")
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
         if (!(sp.getBoolean("pref_loc_on", false)) || (Build.VERSION.SDK_INT >= 23 &&
-                        /*ContextCompat.checkSelfPermission(context,
-                                android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                        PackageManager.PERMISSION_GRANTED &&*/
                         ContextCompat.checkSelfPermission(this,
                                 android.Manifest.permission.ACCESS_FINE_LOCATION) !=
                         PackageManager.PERMISSION_GRANTED)) {
